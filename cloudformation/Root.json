@@ -6,10 +6,10 @@
   "Globals": {
   },
   "Resources": {
-    "TemplateInfrastructure": {
+    "TransiterInfrastructure": {
       "Type": "AWS::Serverless::Application",
       "Properties": {
-        "Location": "./TemplateInfrastructure.json"
+        "Location": "./TransiterInfrastructure.json"
       }
     },
     "Server": {

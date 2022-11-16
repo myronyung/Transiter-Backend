@@ -1,0 +1,14 @@
+version: 0.2
+variables:
+    S3_BUCKET: "app-pipeline-s3bucket-kzntvyezxgzb"
+phases:
+  install:
+    commands:
+      - (cd dependencies/nodejs/ && yarn install)
+      - yarn install
+  build:
+    commands:
+      - sam package --template-file cloudformation/Root.json --s3-bucket ${S3_BUCKET} --s3-prefix Alarm-Frontend/${CODEBUILD_RESOLVED_SOURCE_VERSION} --output-template-file packaged-template.yaml
+artifacts:
+  files:
+    - packaged-template.yaml
