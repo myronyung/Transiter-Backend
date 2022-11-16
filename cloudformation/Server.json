@@ -1,0 +1,161 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Transform": "AWS::Serverless-2016-10-31",
+  "Parameters": {
+    "AccessControlAllowOrigin": {
+      "Type": "String",
+      "Default": "*"
+    },
+    "AccessControlAllowHeaders": {
+      "Type": "String",
+      "Default": "X-Forwarded-For,X-Auth,Y-Auth,Content-Type"
+    },
+    "AccessControlAllowMethods": {
+      "Type": "String",
+      "Default": "POST, GET, PUT, DELETE"
+    },
+    "Timeout": {
+      "Type": "String",
+      "Default": "180"
+    }
+  },
+
+  "Globals": {
+    "Api": {
+      "OpenApiVersion": "3.0.1",
+      "Cors": {
+        "AllowHeaders": { "Fn::Join" : [ "", [ "'", { "Ref": "AccessControlAllowHeaders" }, "'" ] ] },
+        "AllowMethods": { "Fn::Join" : [ "", [ "'", { "Ref": "AccessControlAllowMethods" }, "'" ] ] },
+        "AllowOrigin":  { "Fn::Join" : [ "", [ "'", { "Ref": "AccessControlAllowOrigin" }, "'" ] ] },
+        "MaxAge": "'86400'"
+      }
+    },
+    "Function":{
+      "Runtime": "nodejs14.x",
+      "MemorySize": 512, 
+      "Timeout": { "Ref": "Timeout" },
+      "Environment": {
+        "Variables": {
+          "ALLOW_HEADER": { "Ref": "AccessControlAllowHeaders" },
+          "ALLOW_METHOD": { "Ref": "AccessControlAllowMethods" },
+          "ALLOW_ORIGIN": { "Ref": "AccessControlAllowOrigin" }
+        }
+      }
+    }
+  },
+  "Resources": {
+    "ApiGatewayApi": {
+      "Type": "AWS::Serverless::Api",
+      "Properties": {
+        "StageName": "V1"
+      }
+    },
+    "GatewayResponseDefault4XX": {
+      "Type": "AWS::ApiGateway::GatewayResponse",
+      "Properties": {
+        "RestApiId": { "Ref": "ApiGatewayApi" },
+        "ResponseType": "DEFAULT_4XX",
+        "ResponseParameters": {
+          "gatewayresponse.header.Access-Control-Allow-Origin": { "Fn::Join" : [ "", [ "'", { "Ref": "AccessControlAllowOrigin" }, "'" ] ] },
+          "gatewayresponse.header.Access-Control-Allow-Headers": { "Fn::Join" : [ "", [ "'", { "Ref": "AccessControlAllowHeaders" }, "'" ] ] },
+          "gatewayresponse.header.Access-Control-Allow-Methods": { "Fn::Join" : [ "", [ "'", { "Ref": "AccessControlAllowMethods" }, "'" ] ] }
+        }
+      }
+    },
+    "GatewayResponseDefault5XX": {
+      "Type": "AWS::ApiGateway::GatewayResponse",
+      "Properties": {
+        "RestApiId": { "Ref": "ApiGatewayApi" },
+        "ResponseType": "DEFAULT_5XX",
+        "ResponseParameters": {
+          "gatewayresponse.header.Access-Control-Allow-Origin": { "Fn::Join" : [ "", [ "'", { "Ref": "AccessControlAllowOrigin" }, "'" ] ] },
+          "gatewayresponse.header.Access-Control-Allow-Headers": { "Fn::Join" : [ "", [ "'", { "Ref": "AccessControlAllowHeaders" }, "'" ] ] },
+          "gatewayresponse.header.Access-Control-Allow-Methods": { "Fn::Join" : [ "", [ "'", { "Ref": "AccessControlAllowMethods" }, "'" ] ] }
+        }
+      }
+    },
+    "DependencyLayer": {
+      "Type": "AWS::Serverless::LayerVersion",
+      "Properties": {
+        "LayerName": "Dependencies-Server",
+        "ContentUri": "../dependencies/",
+        "CompatibleRuntimes": [
+          "nodejs12.x"
+        ],
+        "LicenseInfo": "MIT",
+        "RetentionPolicy": "Delete"
+      }
+    },
+
+    "ServerApiRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Sid": "",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "ManagedPolicyArns": [
+          "arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+        ],
+        "Policies": [          
+          {
+            "PolicyName": "TransiterDynamoDbAccess",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Action": [
+                    "dynamodb:GetItem",
+                    "dynamodb:PutItem",
+                    "dynamodb:UpdateItem",
+                    "dynamodb:Query",
+                    "dynamodb:DeleteItem"
+                  ],
+                  "Effect": "Allow",
+                  "Resource": { "Fn::Sub": "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/TransiterComments*" }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+
+    "ServerApi": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "Handler": "controller/api/api.call",
+        "CodeUri": "../src/",
+        "Layers": [{ "Ref": "DependencyLayer" }],
+        "Role": { "Fn::GetAtt": "ServerApiRole.Arn" },
+        "Architectures": ["arm64"],
+        "Events": {
+          "ping": {
+            "Type": "Api",
+            "Properties": {
+              "RestApiId": { "Ref": "ApiGatewayApi" },
+              "Path": "/ping",
+              "Method": "GET"
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "Outputs": {
+    "ApiEndpoint": {
+      "Description": "ApiEndpoint",
+      "Value": { "Fn::Sub": [ "https://${apiCode}.execute-api.${AWS::Region}.amazonaws.com/V1", { "apiCode": {"Ref" : "ApiGatewayApi" }} ]}
+    }
+  }
+}

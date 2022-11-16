@@ -1,0 +1,45 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Transform": "AWS::Serverless-2016-10-31",
+  "Parameters": {
+  },
+  "Globals": {
+  },
+  "Resources": {
+    "TemplateInfrastructure": {
+      "Type": "AWS::Serverless::Application",
+      "Properties": {
+        "Location": "./TemplateInfrastructure.json"
+      }
+    },
+    "Server": {
+      "Type": "AWS::Serverless::Application",
+      "Properties": {
+        "Location": "./Server.json",
+        "Parameters": {
+          "AccessControlAllowOrigin": "*",
+          "AccessControlAllowHeaders": "X-Forwarded-For,X-Auth,Y-Auth,Content-Type",
+          "AccessControlAllowMethods": "POST, GET, PUT, DELETE",
+          "Timeout": "180"
+        }
+      }
+    },
+
+
+    "ApiEndpoint": {
+      "Type": "AWS::SSM::Parameter",
+      "Properties": {
+        "Name": "Transiter-Api",
+        "Type": "String",
+        "Value": { "Fn::GetAtt": ["Server", "Outputs.ApiEndpoint"] }
+      }
+    }
+  },
+  "Outputs": {
+    "ApiEndpoint": {
+      "Description": "ApiEndpoint",
+      "Value": { "Fn::GetAtt": ["Server", "Outputs.ApiEndpoint"] },
+      "Export": { "Name": "Transiter-Api" }
+    }
+  }
+}
