@@ -19,7 +19,6 @@
       "Default": "180"
     }
   },
-
   "Globals": {
     "Api": {
       "OpenApiVersion": "3.0.1",
@@ -86,7 +85,6 @@
         "RetentionPolicy": "Delete"
       }
     },
-
     "ServerApiRole": {
       "Type": "AWS::IAM::Role",
       "Properties": {
@@ -129,7 +127,6 @@
         ]
       }
     },
-
     "ServerApi": {
       "Type": "AWS::Serverless::Function",
       "Properties": {
@@ -151,7 +148,6 @@
       }
     }
   },
-
   "Outputs": {
     "ApiEndpoint": {
       "Description": "ApiEndpoint",

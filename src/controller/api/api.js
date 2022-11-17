@@ -6,12 +6,10 @@ const routes = {
   'GET:/ping': require('./miscellaneous/ping'),
 };
 
-const {tokenParser} = require('../../permission/authentication/verify');
-
 exports.call = async (event, context, callback) => {
   Error.stackTraceLimit = 100;
   try {
-    const {api, auth, bodySchema, pathParamSchema, queryParamSchema} = getApi(event.httpMethod, event.resource);
+    const {api, bodySchema, pathParamSchema, queryParamSchema} = getApi(event.httpMethod, event.resource);
     if (!api) {
       return httpReturn('404', 'API NOT SUPPORTED');
     }
@@ -53,15 +51,9 @@ exports.call = async (event, context, callback) => {
       }
     }
 
-    let requester = null;
-    if (auth) {
-      requester = await tokenParser(event);
-      await auth(body, pathParam, queryParam, requester);
-    }
+    console.debug({httpMethod: event.httpMethod, resource: event.resource, body, pathParam, queryParam});
 
-    console.debug({httpMethod: event.httpMethod, resource: event.resource, body, pathParam, queryParam, requester});
-
-    const result = await api(body, pathParam, queryParam, requester);
+    const result = await api(body, pathParam, queryParam);
 
     return return200(result);
   } catch (e) {
@@ -120,4 +112,8 @@ const handleError = (e, event) => {
     console.error(e);
     return httpReturn(500, 'error_occured');
   }
+};
+
+const getAllowOrigin = () => {
+  return process.env.ALLOW_ORIGIN;
 };

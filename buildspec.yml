@@ -1,6 +1,7 @@
 version: 0.2
-variables:
-    S3_BUCKET: "app-pipeline-s3bucket-transiter"
+env:
+  variables:
+      S3_BUCKET: "transiter-infrastructure"
 phases:
   install:
     commands:
