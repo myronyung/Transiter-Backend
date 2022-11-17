@@ -119,7 +119,7 @@
                     "dynamodb:DeleteItem"
                   ],
                   "Effect": "Allow",
-                  "Resource": { "Fn::Sub": "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/TransiterComments*" }
+                  "Resource": { "Fn::Sub": "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/TransiterReviews*" }
                 }
               ]
             }

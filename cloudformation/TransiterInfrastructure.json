@@ -4,7 +4,7 @@
   "Parameters": {
   },
   "Resources": {
-    "TransiterCommentsDB": {
+    "TransiterReviewsDdb": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
         "TableName": "Transiter_Comments",
