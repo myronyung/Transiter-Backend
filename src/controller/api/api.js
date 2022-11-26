@@ -19,14 +19,14 @@ const routes = {
   // Bus stop //
   // Create and delete
   'POST:/busStop/{busStop}': require('./transiter/stop_review/transiter_stop_review_create'),
+  'POST:/busStop/{busStop}/anonymous': require('./transiter/stop_review/transiter_stop_review_create_anonymous'),
   'DELETE:/busStop/{busStop}/stopReview/{stopReviewRn}': require('./transiter/stop_review/transiter_stop_review_delete'),
 
   // Update
   'PUT:/busStop/{busStop}/stopReview/{stopReviewRn}': require('./transiter/stop_review/transiter_stop_review_update'),
 
   // List
-  'GET:/busStop/{busStop}/reviews': require('./transiter/stop_review/query/transiter_stop_review_list'),
-  'GET:/stopReview/reviews_author': require('./transiter/stop_review/query/transiter_stop_review_author_list')
+  'GET:/busStop/{busStop}/stop_reviews': require('./transiter/stop_review/query/transiter_stop_review_list'),
   // Bus stop //
 };
 

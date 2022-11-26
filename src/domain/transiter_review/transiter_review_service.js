@@ -4,11 +4,11 @@ const transiterBusReviewManager = require('./internal/transiter_bus_review_manag
 module.exports = {
     stopReview: {
         create: transiterStopReviewManager.createReview,
+        anonymousCreate: transiterStopReviewManager.createAnonymousReview,
         update: transiterStopReviewManager.updateReview,
         remove: transiterStopReviewManager.removeReview,
 
         list: {
-            author: transiterStopReviewManager.listReviewsByAuthor,
             busStop: transiterStopReviewManager.listReviewsByStop,
         }
     },
