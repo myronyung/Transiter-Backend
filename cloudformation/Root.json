@@ -12,6 +12,12 @@
         "Location": "./TransiterInfrastructure.json"
       }
     },
+    "UserInfrastructure": {
+      "Type": "AWS::Serverless::Application",
+      "Properties": {
+        "Location": "./UserInfrastructure.json"
+      }
+    },
     "Server": {
       "Type": "AWS::Serverless::Application",
       "Properties": {
