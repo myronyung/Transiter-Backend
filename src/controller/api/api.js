@@ -4,6 +4,30 @@ Error.stackTraceLimit = 100;
 const routes = {
   // Miscellaneous
   'GET:/ping': require('./miscellaneous/ping'),
+
+  // User //
+  // Create, get, delete
+  'POST:/user': require('./user/user_create'),
+  'GET:/user/userRn/{userRn}': require('./user/user_get'),
+  'DELETE:/user/userRn/{userRn}': require('./user/user_remove'),
+
+  // Update
+  'PUT:/user/userRn/{userRn}': require('./user/user_update'),
+  // User //
+
+
+  // // Bus stop //
+  // // Create and delete
+  // 'POST:/busStop/{busStop}': require('./transiter/stop_review/transiter_stop_review_create'),
+  // 'DELETE:/busStop/{busStop}/stopReview/{stopReviewRn}': require('./transiter/stop_review/transiter_stop_review_delete'),
+
+  // // Update
+  // 'PUT:/busStop/{busStop}/stopReview/{stopReviewRn}': require('./transiter/stop_review/transiter_stop_review_update'),
+
+  // // List
+  // 'GET:/busStop/{busStop}/reviews': require('./transiter/stop_review/query/transiter_stop_review_list'),
+  // 'GET:/stopReview/reviews_author': require('./transiter/stop_review/query/transiter_stop_review_author_list')
+  // // Bus stop //
 };
 
 exports.call = async (event, context, callback) => {
