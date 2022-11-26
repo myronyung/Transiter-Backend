@@ -7,6 +7,10 @@ phases:
     commands:
       - (cd dependencies/nodejs/ && yarn install)
       - yarn install
+  pre_build:
+    on-failure: ABORT
+    commands:
+      - yarn test
   build:
     commands:
       - sam package --template-file cloudformation/Root.json --s3-bucket ${S3_BUCKET} --s3-prefix Transiter-Backend/${CODEBUILD_RESOLVED_SOURCE_VERSION} --output-template-file packaged-template.yaml
