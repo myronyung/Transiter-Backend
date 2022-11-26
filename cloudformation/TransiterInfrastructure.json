@@ -7,18 +7,44 @@
     "TransiterReviewsDdb": {
       "Type": "AWS::DynamoDB::Table",
       "Properties": {
-        "TableName": "Transiter_Comments",
+        "TableName": "Transiter_Stop_Review",
         "BillingMode": "PAY_PER_REQUEST",
         "AttributeDefinitions": [
           {
-            "AttributeName": "reviewRn",
+            "AttributeName": "busStop",
+            "AttributeType": "S"
+          },
+          {
+            "AttributeName": "stopReviewRn",
             "AttributeType": "S"
           }
         ],
         "KeySchema": [
           {
-            "AttributeName": "reviewRn",
+            "AttributeName": "busStop",
             "KeyType": "HASH"
+          },
+          {
+            "AttributeName": "stopReviewRn",
+            "KeyType": "RANGE"
+          }
+        ],
+        "LocalSecondaryIndexes": [
+          {
+            "IndexName": "busStop_author_SI",
+            "KeySchema": [
+              {
+                "AttributeName": "busStop",
+                "KeyType": "HASH"
+              },
+              {
+                "AttributeName": "author",
+                "KeyType": "RANGE"
+              }
+            ],
+            "Projection": {
+              "ProjectionType": "ALL"
+            }
           }
         ]
       }

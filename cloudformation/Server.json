@@ -116,6 +116,7 @@
                     "dynamodb:PutItem",
                     "dynamodb:UpdateItem",
                     "dynamodb:Query",
+                    "dynamodb:Scan",
                     "dynamodb:DeleteItem"
                   ],
                   "Effect": "Allow",
@@ -142,6 +143,39 @@
               "RestApiId": { "Ref": "ApiGatewayApi" },
               "Path": "/ping",
               "Method": "GET"
+            }
+          },
+
+          "UserCreate": {
+            "Type": "Api",
+            "Properties": {
+              "RestApiId": { "Ref": "ApiGatewayApi" },
+              "Path": "/user",
+              "Method": "POST"
+            }
+          },
+          "UserUpdate": {
+            "Type": "Api",
+            "Properties": {
+              "RestApiId": { "Ref": "ApiGatewayApi" },
+              "Path": "/user/userRn/{userRn}",
+              "Method": "PUT"
+            }
+          },
+          "UserGet": {
+            "Type": "Api",
+            "Properties": {
+              "RestApiId": { "Ref": "ApiGatewayApi" },
+              "Path": "/user/userRn/{userRn}",
+              "Method": "GET"
+            }
+          },
+          "UserRemove": {
+            "Type": "Api",
+            "Properties": {
+              "RestApiId": { "Ref": "ApiGatewayApi" },
+              "Path": "/user/userRn/{userRn}",
+              "Method": "DELETE"
             }
           }
         }

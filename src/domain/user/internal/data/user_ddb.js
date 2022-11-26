@@ -1,8 +1,8 @@
 const dynamo = require('dynamodb');
 const Joi = require('joi');
 
-const ddb = dynamo.define('User', {
-  tableName: 'TransiterUserDdb',
+const ddb = dynamo.define('Transiter_User', {
+  tableName: 'Transiter_User',
   hashKey: 'userRn',
   schema: {
     userRn: Joi.string().required(),
