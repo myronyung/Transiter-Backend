@@ -7,13 +7,16 @@ const ddb = dynamo.define('Transiter_Stop_Review', {
   rangeKey: 'stopReviewRn',
   schema: {
     stopReviewRn: Joi.string().required(),
-    comment: Joi.string().min(0).max(10000).required(),
-    safety: Joi.string().allow(['RED', 'ORANGE', 'GREEN']).required(),
+    comment: Joi.string().min(0).max(180).allow('').required(),
+    safety: Joi.string().allow('RED', 'ORANGE', 'GREEN').required(),
     crowd: Joi.number().min(0).max(100).required(),
-    author: Joi.string().allow('').required(),
-    busNumber: Joi.string().min(0).max(3).required(),
+    author: Joi.object().keys({
+      rn: Joi.string().allow('').required(),
+      userName: Joi.string().required(),
+    }),
+    bus: Joi.string().allow('143', '144', '145', 'R5').required(),
     busStop: Joi.string().min(0).max(5).required(),
-    status: Joi.string.allow(['DISPLAY', 'REMOVED'])
+    status: Joi.string().allow('DISPLAY', 'REMOVED')
   },
   timestamps: true,
 });
@@ -85,5 +88,4 @@ module.exports = {
   update,
   get,
   listByStop,
-  listByAuthor
 };

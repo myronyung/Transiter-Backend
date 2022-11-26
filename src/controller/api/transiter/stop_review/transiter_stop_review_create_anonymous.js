@@ -8,16 +8,16 @@ exports.api = async (body, pathParam, queryParam, requester) => {
   const safety = body.safety;
   const crowd = body.crowd;
   
-  const transiterReview = await transiterReviewService.stopReview.create(busStop, bus, comment, safety, crowd);
+  const transiterReview = await transiterReviewService.stopReview.anonymousCreate(busStop, bus, comment, safety, crowd);
 
   return transiterReview;
 };
 
 exports.bodySchema =
   Joi.object().keys({
-    bus: Joi.string().min(0).max(3).required(),
+    bus: Joi.string().allow('143', '144', '145', 'R5').required(),
     comment: Joi.string().min(0).max(180),
-    safety: Joi.string().allow(['RED', 'ORANGE', 'GREEN']).required(),
+    safety: Joi.string().allow('RED', 'ORANGE', 'GREEN').required(),
     crowd: Joi.number().min(0).max(100).required(),
   }).required();
 
