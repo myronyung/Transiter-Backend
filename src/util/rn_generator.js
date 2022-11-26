@@ -1,4 +1,4 @@
-const idGenerator = require('../../util/nano_id');
+const idGenerator = require('./nano_id');
 
 exports.stopReviewRnGenerator = () => {
   const id = idGenerator();
