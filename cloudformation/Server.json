@@ -146,6 +146,7 @@
             }
           },
 
+
           "UserCreate": {
             "Type": "Api",
             "Properties": {
@@ -176,6 +177,48 @@
               "RestApiId": { "Ref": "ApiGatewayApi" },
               "Path": "/user/userRn/{userRn}",
               "Method": "DELETE"
+            }
+          },
+
+
+          "StopReviewCreate": {
+            "Type": "Api",
+            "Properties": {
+              "RestApiId": { "Ref": "ApiGatewayApi" },
+              "Path": "/busStop/{busStop}",
+              "Method": "POST"
+            }
+          },
+          "StopReviewAnonymousCreate": {
+            "Type": "Api",
+            "Properties": {
+              "RestApiId": { "Ref": "ApiGatewayApi" },
+              "Path": "/busStop/{busStop}/anonymous",
+              "Method": "POST"
+            }
+          },
+          "StopReviewRemove": {
+            "Type": "Api",
+            "Properties": {
+              "RestApiId": { "Ref": "ApiGatewayApi" },
+              "Path": "/busStop/{busStop}/stopReview/{stopReviewRn}",
+              "Method": "DELETE"
+            }
+          },
+          "StopReviewUpdate": {
+            "Type": "Api",
+            "Properties": {
+              "RestApiId": { "Ref": "ApiGatewayApi" },
+              "Path": "/busStop/{busStop}/stopReview/{stopReviewRn}",
+              "Method": "PUT"
+            }
+          },
+          "StopReviewList": {
+            "Type": "Api",
+            "Properties": {
+              "RestApiId": { "Ref": "ApiGatewayApi" },
+              "Path": "/busStop/{busStop}/stop_reviews",
+              "Method": "GET"
             }
           }
         }
