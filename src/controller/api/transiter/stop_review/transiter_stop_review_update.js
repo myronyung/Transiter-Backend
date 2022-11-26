@@ -4,15 +4,13 @@ const Joi = require('joi');
 exports.api = async (body, pathParam, queryParam, requester) => {
   const busStop = pathParam.busStop;
   const stopReviewRn = pathParam.stopReviewRn;
-  const comment = body.comment || '';
+  const comment = body.comment;
   const safety = body.safety;
   const crowd = body.crowd;
   
   const transiterReview = await transiterReviewService.stopReview.update(busStop, stopReviewRn, comment, safety, crowd);
 
-  return {
-    transiterReview,
-  };
+  return transiterReview;
 };
 
 exports.bodySchema =

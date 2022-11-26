@@ -11,9 +11,7 @@ exports.api = async (body, pathParam, queryParam, requester) => {
   
   const transiterReview = await transiterReviewService.stopReview.create(busStop, bus, comment, safety, crowd, author);
 
-  return {
-    transiterReview,
-  };
+  return transiterReview;
 };
 
 exports.bodySchema =
@@ -22,10 +20,7 @@ exports.bodySchema =
     comment: Joi.string().min(0).max(180),
     safety: Joi.string().allow(['RED', 'ORANGE', 'GREEN']).required(),
     crowd: Joi.number().min(0).max(100).required(),
-    author:  Joi.object().keys({
-      rn: Joi.string().required(),
-      userName: Joi.string().required(),
-    }).required(),
+    author: Joi.string().required(),
   }).required();
 
 exports.pathParamSchema =

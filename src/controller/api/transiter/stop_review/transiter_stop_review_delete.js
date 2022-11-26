@@ -7,9 +7,7 @@ exports.api = async (body, pathParam, queryParam, requester) => {
 
   const transiterReview = await transiterReviewService.stopReview.remove(busStop, stopReviewRn);
 
-  return {
-    transiterReview,
-  };
+  return transiterReview;
 };
 
 exports.pathParamSchema =

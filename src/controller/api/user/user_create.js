@@ -8,7 +8,7 @@ exports.api = async (body, pathParam, queryParam, requester) => {
 
   const user = await userService.user.create(email, firstName, lastName);
 
-  return user
+  return user;
 };
 
 exports.bodySchema =

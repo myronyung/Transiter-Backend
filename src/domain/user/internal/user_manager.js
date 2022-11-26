@@ -31,7 +31,7 @@ const getUser = async (userRn) => {
 
   }
 
-  return user
+  return user;
 }
 
 const updateUser = async (userRn, firstName, lastName, email) => {
@@ -41,18 +41,18 @@ const updateUser = async (userRn, firstName, lastName, email) => {
   user.lastName = lastName || user.lastName;
   user.email = email || user.email;
 
-  await userDataDdb.update(user)
+  await userDataDdb.update(user);
 
-  return user
+  return user;
 }
 
 const removeUser = async (userRn) => {
   const user = await getUser(userRn);
 
-  user.status = 'REMOVED'
-  await userDataDdb.update(user)
+  user.status = 'REMOVED';
+  await userDataDdb.update(user);
   
-  return user
+  return user;
 }
 
 module.exports = {

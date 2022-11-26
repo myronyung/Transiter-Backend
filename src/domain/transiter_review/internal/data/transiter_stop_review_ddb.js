@@ -1,8 +1,8 @@
 const dynamo = require('dynamodb');
 const Joi = require('joi');
 
-const ddb = dynamo.define('TransiterStopReviewDdb', {
-  tableName: 'TransiterStopReviewDdb',
+const ddb = dynamo.define('Transiter_Stop_Review', {
+  tableName: 'Transiter_Stop_Review',
   hashKey: 'busStop',
   rangeKey: 'stopReviewRn',
   schema: {
@@ -10,20 +10,11 @@ const ddb = dynamo.define('TransiterStopReviewDdb', {
     comment: Joi.string().min(0).max(10000).required(),
     safety: Joi.string().allow(['RED', 'ORANGE', 'GREEN']).required(),
     crowd: Joi.number().min(0).max(100).required(),
-    author: Joi.string().required(),
+    author: Joi.string().allow('').required(),
     busNumber: Joi.string().min(0).max(3).required(),
     busStop: Joi.string().min(0).max(5).required(),
     status: Joi.string.allow(['DISPLAY', 'REMOVED'])
   },
-  indexes: [
-    {
-      hashKey: 'busStop',
-      rangeKey: 'author',
-      name: 'busStop_author_SI',
-      type: 'local',
-      projection: {ProjectionType: 'ALL'},
-    }
-  ],
   timestamps: true,
 });
 
@@ -41,11 +32,7 @@ const get = async (busStop, stopReviewRn) => {
 };
 
 const listByStop = async (busStop, filter) => {
-  return search(null, busStop, '', '', '', filter)
-};
-
-const listByAuthor = async (busStop, author, filter) => {
-  return search('busStop_author_SI', busStop, author, 'eq', 'author', filter)
+  return search(null, busStop, '', '', '', filter);
 };
 
 const search = (index, key, search, searchType, searchKey, filters) => {
