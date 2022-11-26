@@ -28,24 +28,6 @@
             "AttributeName": "stopReviewRn",
             "KeyType": "RANGE"
           }
-        ],
-        "LocalSecondaryIndexes": [
-          {
-            "IndexName": "busStop_author_SI",
-            "KeySchema": [
-              {
-                "AttributeName": "busStop",
-                "KeyType": "HASH"
-              },
-              {
-                "AttributeName": "author",
-                "KeyType": "RANGE"
-              }
-            ],
-            "Projection": {
-              "ProjectionType": "ALL"
-            }
-          }
         ]
       }
     }
