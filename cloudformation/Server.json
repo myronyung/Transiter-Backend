@@ -189,14 +189,6 @@
               "Method": "POST"
             }
           },
-          "StopReviewAnonymousCreate": {
-            "Type": "Api",
-            "Properties": {
-              "RestApiId": { "Ref": "ApiGatewayApi" },
-              "Path": "/busStop/{busStop}/anonymous",
-              "Method": "POST"
-            }
-          },
           "StopReviewRemove": {
             "Type": "Api",
             "Properties": {

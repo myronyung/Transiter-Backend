@@ -19,7 +19,6 @@ const routes = {
   // Bus stop //
   // Create and delete
   'POST:/busStop/{busStop}': require('./transiter/stop_review/transiter_stop_review_create'),
-  'POST:/busStop/{busStop}/anonymous': require('./transiter/stop_review/transiter_stop_review_create_anonymous'),
   'DELETE:/busStop/{busStop}/stopReview/{stopReviewRn}': require('./transiter/stop_review/transiter_stop_review_remove'),
 
   // Update
