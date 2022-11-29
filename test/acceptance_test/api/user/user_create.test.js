@@ -8,6 +8,7 @@ const faker = require('faker');
 describe('User create', () => {
   beforeEach(async () => {
     await factory.createFullyPopulatedDatabase();
+    jest.clearAllMocks();
   });
 
   test('succesfully', async () => {

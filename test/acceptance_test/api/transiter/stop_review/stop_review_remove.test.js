@@ -8,6 +8,7 @@ const faker = require('faker');
 describe('Stop review remove', () => {
   beforeEach(async () => {
     await factory.createFullyPopulatedDatabase();
+    jest.clearAllMocks();
   });
 
   test('succesfully', async () => {

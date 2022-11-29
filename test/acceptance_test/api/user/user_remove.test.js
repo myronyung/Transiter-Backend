@@ -8,6 +8,7 @@ const factory = require('../../../factory');
 describe('User remove', () => {
   beforeEach(async () => {
     await factory.createFullyPopulatedDatabase();
+    jest.clearAllMocks();
   });
 
   test('succesfully', async () => {

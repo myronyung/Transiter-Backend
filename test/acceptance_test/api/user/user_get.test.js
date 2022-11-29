@@ -7,6 +7,7 @@ const factory = require('../../../factory');
 describe('User get', () => {
   beforeEach(async () => {
     await factory.createFullyPopulatedDatabase();
+    jest.clearAllMocks();
   });
 
   test('succesfully', async () => {
