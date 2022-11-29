@@ -16,7 +16,7 @@ const ddb = dynamo.define('Transiter_Stop_Review', {
     }),
     bus: Joi.string().allow('143', '144', '145', 'R5').required(),
     busStop: Joi.string().min(0).max(5).required(),
-    status: Joi.string().allow('DISPLAY', 'REMOVED')
+    status: Joi.string().allow('DISPLAY', 'REMOVED').required(),
   },
   timestamps: true,
 });

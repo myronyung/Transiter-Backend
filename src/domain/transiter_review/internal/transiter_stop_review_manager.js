@@ -17,6 +17,7 @@ const createReview = async (busStop, bus, comment, safety, crowd, authorRn) => {
           rn: author.userRn,
           userName: userNameGenerator(author),
         },
+        status: 'DISPLAY',
     };
 
     await transiterStopReviewDdb.create(stopReview);
@@ -36,6 +37,7 @@ const createAnonymousReview = async (busStop, bus, comment, safety, crowd) => {
         rn: 'ANONYMOUS',
         userName: anonymousGenerator(),
       },
+      status: 'DISPLAY',
   };
 
   await transiterStopReviewDdb.create(stopReview);
