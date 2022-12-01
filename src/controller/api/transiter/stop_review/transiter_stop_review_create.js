@@ -8,10 +8,11 @@ exports.api = async (body, pathParam, queryParam, requester) => {
   const safety = body.safety;
   const crowd = body.crowd;
   const authorRn = body.authorRn;
-  
+  const userName = body.userName;
+
   var transiterReview;
-  if (authorRn) {
-    transiterReview = await transiterReviewService.stopReview.create(busStop, bus, comment, safety, crowd, authorRn);
+  if (authorRn && userName) {
+    transiterReview = await transiterReviewService.stopReview.create(busStop, bus, comment, safety, crowd, authorRn, userName);
   } else {
     transiterReview = await transiterReviewService.stopReview.anonymousCreate(busStop, bus, comment, safety, crowd);
   }
@@ -26,6 +27,7 @@ exports.bodySchema =
     safety: Joi.string().allow('RED', 'ORANGE', 'GREEN').required(),
     crowd: Joi.number().min(0).max(100).required(),
     authorRn: Joi.string(),
+    userName: Joi.string(),
   }).required();
 
 exports.pathParamSchema =

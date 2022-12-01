@@ -159,7 +159,7 @@
             "Type": "Api",
             "Properties": {
               "RestApiId": { "Ref": "ApiGatewayApi" },
-              "Path": "/user/userRn/{userRn}",
+              "Path": "/user/userName/{userName}/userRn/{userRn}",
               "Method": "PUT"
             }
           },
@@ -167,7 +167,7 @@
             "Type": "Api",
             "Properties": {
               "RestApiId": { "Ref": "ApiGatewayApi" },
-              "Path": "/user/userRn/{userRn}",
+              "Path": "/user/userName/{userName}/userRn/{userRn}",
               "Method": "GET"
             }
           },
@@ -175,8 +175,26 @@
             "Type": "Api",
             "Properties": {
               "RestApiId": { "Ref": "ApiGatewayApi" },
-              "Path": "/user/userRn/{userRn}",
+              "Path": "/user/userName/{userName}/userRn/{userRn}",
               "Method": "DELETE"
+            }
+          },
+
+
+          "UserAuth": {
+            "Type": "Api",
+            "Properties": {
+              "RestApiId": { "Ref": "ApiGatewayApi" },
+              "Path": "/userAuth/userName/{userName}/userRn/{userRn}",
+              "Method": "PUT"
+            }
+          },
+          "UserUpdatePassWord": {
+            "Type": "Api",
+            "Properties": {
+              "RestApiId": { "Ref": "ApiGatewayApi" },
+              "Path": "/userAuth/userName/{userName}/userRn/{userRn}",
+              "Method": "GET"
             }
           },
 

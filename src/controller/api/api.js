@@ -8,12 +8,18 @@ const routes = {
   // User //
   // Create, get, delete
   'POST:/user': require('./user/user_create'),
-  'GET:/user/userRn/{userRn}': require('./user/user_get'),
-  'DELETE:/user/userRn/{userRn}': require('./user/user_remove'),
+  'GET:/user/userName/{userName}/userRn/{userRn}': require('./user/user_get'),
+  'DELETE:/user/userName/{userName}/userRn/{userRn}': require('./user/user_remove'),
 
   // Update
-  'PUT:/user/userRn/{userRn}': require('./user/user_update'),
+  'PUT:/user/userName/{userName}/userRn/{userRn}': require('./user/user_update'),
   // User //
+
+
+  // User authentication //
+  'GET:/userAuth/userName/{userName}/userRn/{userRn}': require('./user_auth/user_authorize'),
+  'PUT:/userAuth/userName/{userName}/userRn/{userRn}': require('./user_auth/user_update_password'),
+  // User authentication //
 
 
   // Bus stop //

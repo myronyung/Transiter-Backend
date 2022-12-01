@@ -4,21 +4,23 @@ const userService = require('../../../domain/user/user_service');
 exports.api = async (body, pathParam, queryParam, requester) => {
   const userRn = pathParam.userRn;
   const userName = pathParam.userName;
-  const lastName = body.lastName;
-  const firstName = body.firstName;
-  const email = body.email;
   const password = body.password;
+  const newPassword = body.newPassword;
 
-  const userAuth = await userService.userAuth.auth(userName,userRn, password);
+  const userAuth = await userService.userAuth.auth(userName, userRn, password);
 
-  var user;
+  var newUserAuth;
   if (userAuth.authorized) {
-    user = await userService.user.update(userRn, userName, firstName, lastName, email);
+    newUserAuth = await userService.userAuth.updatePassword(userName, userRn, newPassword);
   } else {
-    user = await userService.user.get(userName, userRn);
+    newUserAuth = {
+      userName,
+      userRn,
+      password,
+    }
   }
 
-  return user;
+  return newUserAuth;
 };
 
 exports.pathParamSchema =
@@ -29,8 +31,6 @@ exports.pathParamSchema =
 
 exports.bodySchema =
   Joi.object().keys({
-    lastName: Joi.string().min(1).max(30),
-    firstName: Joi.string().min(1).max(30),
-    email: Joi.string().email(),
     password: Joi.string().min(1).max(30).required(),
+    newPassword: Joi.string().min(1).max(30).required(),
   }).required();

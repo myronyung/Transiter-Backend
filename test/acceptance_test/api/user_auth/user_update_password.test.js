@@ -1,58 +1,51 @@
 require('../../../mocks/setup');
 
-const controller = require('../../../../src/controller/api/user/user_update');
+const controller = require('../../../../src/controller/api/user_auth/user_update_password');
 const {databases} = require('../../../mocks');
 const factory = require('../../../factory');
 const faker = require('faker');
 
-describe('User update', () => {
+describe('User password reset', () => {
   beforeEach(async () => {
     await factory.createFullyPopulatedDatabase();
     jest.clearAllMocks();
   });
 
   describe('succesfully', () => {
-    test('update user details', async () => {
+    test('update user password', async () => {
       const pathParam = {
         userName: factory.user.default.userName,
         userRn: factory.user.default.userRn,
       };
       const body = {
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName(),
-        email: faker.internet.email(),
-        password: factory.userAuth.default.password
+        password: factory.userAuth.default.password,
+        newPassword: faker.internet.userName(),
       };
   
       const result = await controller.api(body, pathParam);
       expect(result).not.toBeNull();
   
-      const userData = await databases.userData.get(result.userName, result.userRn);
-      expect(userData).not.toBeNull();
-      expect(userData.firstName).toBe(body.firstName);
-      expect(userData.lastName).toBe(body.lastName);
-      expect(userData.email).toBe(body.email);
+      const userAuthData = await databases.userAuthData.get(result.userName, result.userRn);
+      expect(userAuthData).not.toBeNull();
+      expect(userAuthData.password).toBe(body.newPassword);
     });
 
-    test('update with no new user details', async () => {
+    test('user password not updated', async () => {
       const pathParam = {
         userName: factory.user.default.userName,
         userRn: factory.user.default.userRn,
       };
       const body = {
-        password: factory.userAuth.default.password
+        password: faker.internet.userName(),
+        newPassword: faker.internet.userName(),
       };
   
       const result = await controller.api(body, pathParam);
       expect(result).not.toBeNull();
   
-      const userData = await databases.userData.get(result.userName, result.userRn);
-      expect(userData).not.toBeNull();
-
-      const defaultUser = factory.user.default
-      expect(userData.firstName).toBe(defaultUser.firstName);
-      expect(userData.lastName).toBe(defaultUser.lastName);
-      expect(userData.email).toBe(defaultUser.email);
+      const userAuthData = await databases.userAuthData.get(result.userName, result.userRn);
+      expect(userAuthData).not.toBeNull();
+      expect(userAuthData.password).toBe(factory.userAuth.default.password);
     });
   })
   
@@ -63,9 +56,8 @@ describe('User update', () => {
         userRn: faker.datatype.uuid(),
       };
       const body = {
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName(),
-        email: faker.internet.email(),
+        password: factory.userAuth.default.password,
+        newPassword: faker.internet.userName(),
       };
       try {
         await controller.api(body, pathParam);

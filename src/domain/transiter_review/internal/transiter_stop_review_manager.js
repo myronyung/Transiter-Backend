@@ -3,8 +3,8 @@ const userService = require('../../user/user_service')
 const {stopReviewRnGenerator} = require('../../../util/rn_generator');
 const {userNameGenerator, anonymousGenerator} = require('../../../util/user_name_generator');
 
-const createReview = async (busStop, bus, comment, safety, crowd, authorRn) => {
-    const author = await userService.user.get(authorRn);
+const createReview = async (busStop, bus, comment, safety, crowd, authorRn, userName) => {
+    const author = await userService.user.get(userName, authorRn);
 
     const stopReview = {
         stopReviewRn: stopReviewRnGenerator(),
@@ -15,7 +15,7 @@ const createReview = async (busStop, bus, comment, safety, crowd, authorRn) => {
         crowd,
         author: {
           rn: author.userRn,
-          userName: userNameGenerator(author),
+          userName: author.userName,
         },
         status: 'DISPLAY',
     };
@@ -45,8 +45,8 @@ const createAnonymousReview = async (busStop, bus, comment, safety, crowd) => {
   return stopReview;
 }
 
-const updateReview = async (busStop, stopReviewRn, comment, safety, crowd, authorRn) => {
-  await userService.user.get(authorRn);
+const updateReview = async (busStop, stopReviewRn, comment, safety, crowd, authorRn, userName) => {
+  await userService.user.get(userName, authorRn);
 
   const stopReview = await transiterStopReviewDdb.get(busStop, stopReviewRn);
   if (!stopReview) {

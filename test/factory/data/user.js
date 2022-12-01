@@ -7,6 +7,7 @@ const defaultUser = {
   'email': faker.internet.email(),
   'firstName': faker.name.firstName(),
   'lastName': faker.name.lastName(),
+  'userName': faker.internet.userName(),
   'status': 'ACTIVE',
 };
 
@@ -16,6 +17,7 @@ const removedUser = {
   'email': faker.internet.email(),
   'firstName': faker.name.firstName(),
   'lastName': faker.name.lastName(),
+  'userName': faker.internet.userName(),
   'status': 'REMOVED',
 };
 

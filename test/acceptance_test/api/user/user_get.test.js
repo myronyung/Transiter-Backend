@@ -12,6 +12,7 @@ describe('User get', () => {
 
   test('succesfully', async () => {
     const pathParam = {
+      userName: factory.user.default.userName,
       userRn: factory.user.default.userRn,
     };
 
@@ -24,6 +25,7 @@ describe('User get', () => {
   describe('fails', () => {
     test('user not found', async () => {
       const pathParam = {
+        userName: faker.internet.userName(),
         userRn: faker.datatype.uuid(),
       };
       try {
@@ -38,6 +40,7 @@ describe('User get', () => {
 
     test('user removed', async () => {
       const pathParam = {
+      userName: factory.user.removedUser.userName,
         userRn: factory.user.removedUser.userRn,
       };
       try {

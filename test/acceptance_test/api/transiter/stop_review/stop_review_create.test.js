@@ -19,6 +19,7 @@ describe('Stop review create', () => {
         safety: faker.random.arrayElement(['RED', 'ORANGE', 'GREEN']),
         crowd: faker.datatype.number({min: 0, max: 100}),
         authorRn: factory.user.default.userRn,
+        userName: factory.user.default.userName,
       };
       const pathParam = {
         busStop: faker.datatype.number({min: 1000, max: 2000}).toString()
@@ -27,7 +28,7 @@ describe('Stop review create', () => {
       const result = await controller.api(body, pathParam);
       expect(result).not.toBeNull();
   
-      const author = await databases.userData.get(body.authorRn);
+      const author = await databases.userData.get(factory.user.default.userName, factory.user.default.userRn);
   
       const stopReview = await databases.transiterStopReviewData.get(result.busStop, result.stopReviewRn);
       expect(stopReview).not.toBeNull();
@@ -37,7 +38,7 @@ describe('Stop review create', () => {
       expect(stopReview.crowd).toBe(body.crowd);
       expect(stopReview.author).toStrictEqual({
         rn: body.authorRn,
-        userName: `${author.firstName}_${author.lastName}`,
+        userName: factory.user.default.userName,
       });
     });
     test('create stop review anonymously', async () => {
@@ -75,6 +76,7 @@ describe('Stop review create', () => {
         safety: faker.random.arrayElement(['RED', 'ORANGE', 'GREEN']),
         crowd: faker.datatype.number({min: 0, max: 100}),
         authorRn: faker.datatype.uuid(),
+        userName: faker.internet.userName(),
       };
       const pathParam = {
         busStop: faker.datatype.number({min: 1000, max: 2000}).toString()

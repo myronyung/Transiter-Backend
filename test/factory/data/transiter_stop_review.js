@@ -11,7 +11,7 @@ const stopReview = {
   'crowd': faker.datatype.number({min: 0, max: 100}),
   'author': {
     'rn': user.default.userRn,
-    'userName': userNameGenerator(user.default)
+    'userName': user.default.userName,
   },
   'bus': 'R5',
   'busStop': '51374',
@@ -26,7 +26,7 @@ const stopReview2 = {
   'crowd': faker.datatype.number({min: 0, max: 100}),
   'author': {
     'rn': user.default.userRn,
-    'userName': userNameGenerator(user.default),
+    'userName': user.default.userName,
   },
   'bus': 'R5',
   'busStop': '51374',
@@ -41,7 +41,7 @@ const stopReviewRemoved = {
   'crowd': faker.datatype.number({min: 0, max: 100}),
   'author': {
     'rn': user.default.userRn,
-    'userName': userNameGenerator(user.default),
+    'userName': user.default.userName,
   },
   'bus': faker.random.arrayElement(['143', '144', '145', 'R5']),
   'busStop': faker.datatype.number({min: 1000, max: 2000}).toString(),

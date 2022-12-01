@@ -18,6 +18,7 @@ describe('Stop review update', () => {
         safety: faker.random.arrayElement(['RED', 'ORANGE', 'GREEN']),
         crowd: faker.datatype.number({min: 0, max: 100}),
         authorRn: factory.user.default.userRn,
+        userName: factory.user.default.userName,
       };
       const pathParam = {
         busStop: factory.transiterStopReview.default.busStop,
@@ -37,6 +38,7 @@ describe('Stop review update', () => {
     test('update stop review with no new details', async () => {
       const body = {
         authorRn: factory.user.default.userRn,
+        userName: factory.user.default.userName,
       };
       const pathParam = {
         busStop: factory.transiterStopReview.default.busStop,
@@ -58,6 +60,7 @@ describe('Stop review update', () => {
         safety: faker.random.arrayElement(['RED', 'ORANGE', 'GREEN']),
         crowd: faker.datatype.number({min: 0, max: 100}),
         authorRn: faker.datatype.uuid(),
+        userName: faker.internet.userName(),
       };
       const pathParam = {
         busStop: factory.transiterStopReview.default.busStop,
@@ -79,6 +82,7 @@ describe('Stop review update', () => {
         safety: faker.random.arrayElement(['RED', 'ORANGE', 'GREEN']),
         crowd: faker.datatype.number({min: 0, max: 100}),
         authorRn: factory.user.default.userRn,
+        userName: factory.user.default.userName,
       };
       const pathParam = {
         busStop: factory.transiterStopReview.default.busStop,
@@ -100,6 +104,7 @@ describe('Stop review update', () => {
         safety: faker.random.arrayElement(['RED', 'ORANGE', 'GREEN']),
         crowd: faker.datatype.number({min: 0, max: 100}),
         authorRn: factory.user.default.userRn,
+        userName: factory.user.default.userName,
       };
       const pathParam = {
         busStop: factory.transiterStopReview.removed.busStop,

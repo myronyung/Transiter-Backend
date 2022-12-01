@@ -1,14 +1,21 @@
 const userDataDdb = require('./data/user_ddb');
 const {userRnGenerator} = require('../../../util/rn_generator')
 
-const createUser = async (email, firstName, lastName) => {
-  const existingUsers = await userDataDdb.getbyEmail(email);
-  if (existingUsers.list.some((x) => x.status === 'ACTIVE')) {
+const createUser = async (email, firstName, lastName, userName, password) => {
+  const exisitingUserNames = await userDataDdb.getByUserName(userName);
+  if (exisitingUserNames.list.some((x) => x.status === 'ACTIVE')) {
+    throw {errorCode: 404, message: 'userName_already_active'};
+  }
+
+  const existingEmails = await userDataDdb.getByEmail(email);
+  if (existingEmails.list.some((x) => x.status === 'ACTIVE')) {
     throw {errorCode: 404, message: 'email_already_active'};
   }
 
+  const userRn = userRnGenerator();
   const newUser = {
-    userRn: userRnGenerator(),
+    userRn,
+    userName,
     email,
     firstName,
     lastName,
@@ -20,8 +27,8 @@ const createUser = async (email, firstName, lastName) => {
   return newUser;
 };
 
-const getUser = async (userRn) => {
-  const user = await userDataDdb.get(userRn);
+const getUser = async (userName, userRn) => {
+  const user = await userDataDdb.get(userName, userRn);
   if (!user) {
     throw {errorCode: 404, message: 'user_not_found'};
   }
@@ -34,8 +41,8 @@ const getUser = async (userRn) => {
   return user;
 }
 
-const updateUser = async (userRn, firstName, lastName, email) => {
-  const user = await getUser(userRn);
+const updateUser = async (userRn, userName, firstName, lastName, email) => {
+  const user = await getUser(userName, userRn);
 
   user.firstName = firstName || user.firstName;
   user.lastName = lastName || user.lastName;
@@ -46,8 +53,8 @@ const updateUser = async (userRn, firstName, lastName, email) => {
   return user;
 }
 
-const removeUser = async (userRn) => {
-  const user = await getUser(userRn);
+const removeUser = async (userName, userRn) => {
+  const user = await getUser(userName, userRn);
 
   user.status = 'REMOVED';
   await userDataDdb.update(user);
