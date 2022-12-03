@@ -1,4 +1,3 @@
-const { userAuthData } = require('../../../../test/mocks/dynamodb/databases');
 const userDataAuthDdb = require('./data/user_auth_ddb');
 
 const createUserAuth = async (userName, userRn, password) => {
@@ -19,7 +18,7 @@ const createUserAuth = async (userName, userRn, password) => {
 };
 
 const authUser = async (userName, userRn, password) => {
-  const userAuth = await userAuthData.get(userName, userRn);
+  const userAuth = await userDataAuthDdb.get(userName, userRn);
   if (!userAuth) {
     throw {errorCode: 404, message: 'user_not_found'};
   }
@@ -32,14 +31,14 @@ const authUser = async (userName, userRn, password) => {
 }
 
 const updatePassword = async (userName, userRn, newPassword) => {
-  const userAuth = await userAuthData.get(userName, userRn);
+  const userAuth = await userDataAuthDdb.get(userName, userRn);
   if (!userAuth) {
     throw {errorCode: 404, message: 'user_not_found'};
   }
   
   userAuth.password = newPassword;
 
-  await userAuthData.update(userAuth);
+  await userDataAuthDdb.update(userAuth);
 
   return userAuth;
 }

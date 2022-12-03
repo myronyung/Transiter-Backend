@@ -1,7 +1,7 @@
 const transiterStopReviewDdb = require('./data/transiter_stop_review_ddb');
 const userService = require('../../user/user_service')
 const {stopReviewRnGenerator} = require('../../../util/rn_generator');
-const {userNameGenerator, anonymousGenerator} = require('../../../util/user_name_generator');
+const {anonymousGenerator} = require('../../../util/user_name_generator');
 
 const createReview = async (busStop, bus, comment, safety, crowd, authorRn, userName) => {
     const author = await userService.user.get(userName, authorRn);
