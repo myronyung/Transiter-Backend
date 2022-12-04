@@ -14,7 +14,6 @@ describe('User authorize', () => {
     test('auth user', async () => {
       const pathParam = {
         userName: factory.user.default.userName,
-        userRn: factory.user.default.userRn,
       };
   
       const body = {
@@ -28,7 +27,6 @@ describe('User authorize', () => {
     test('not auth user', async () => {
       const pathParam = {
         userName: factory.user.default.userName,
-        userRn: factory.user.default.userRn,
       };
   
       const body = {
@@ -47,11 +45,9 @@ describe('User authorize', () => {
     test('user not found', async () => {
       const pathParam = {
         userName: faker.internet.userName(),
-        userRn: faker.datatype.uuid(),
       };
       const body = {
         password: factory.userAuth.default.password,
-        newPassword: faker.internet.userName(),
       };
       try {
         await controller.api(body, pathParam);

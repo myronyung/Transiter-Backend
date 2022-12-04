@@ -32,19 +32,11 @@ module.exports = {
           'AttributeName': 'userName',
           'AttributeType': 'S',
         },
-        {
-          'AttributeName': 'userRn',
-          'AttributeType': 'S',
-        },
       ],
       'KeySchema': [
         {
           'AttributeName': 'userName',
           'KeyType': 'HASH',
-        },
-        {
-          'AttributeName': 'userRn',
-          'KeyType': 'RANGE',
         },
       ],
     },

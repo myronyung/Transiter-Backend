@@ -13,6 +13,7 @@ module.exports = {
         create: userAuthManager.createUserAuth,
         updatePassword: userAuthManager.updatePassword,
         remove: userAuthManager.removeUserAuth,
+        get: userAuthManager.getUserAuth,
     }
 };
 

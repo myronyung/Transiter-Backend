@@ -12,6 +12,6 @@ exports.api = async (body, pathParam, queryParam, requester) => {
 
 exports.pathParamSchema =
   Joi.object().keys({
-    userRn: Joi.string().email().required(),
+    userRn: Joi.string().required(),
     userName: Joi.string().min(1).max(30).required(),
   }).required();

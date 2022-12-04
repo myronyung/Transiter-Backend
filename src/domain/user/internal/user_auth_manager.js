@@ -1,7 +1,7 @@
 const userDataAuthDdb = require('./data/user_auth_ddb');
 
 const createUserAuth = async (userName, userRn, password) => {
-  const existingUserAuth = await userDataAuthDdb.get(userName, userRn);
+  const existingUserAuth = await userDataAuthDdb.get(userName);
   if (existingUserAuth) {
     throw {errorCode: 404, message: 'account_already_exists'};
   }
@@ -17,21 +17,21 @@ const createUserAuth = async (userName, userRn, password) => {
   return newUser;
 };
 
-const authUser = async (userName, userRn, password) => {
-  const userAuth = await userDataAuthDdb.get(userName, userRn);
+const authUser = async (userName, password) => {
+  const userAuth = await userDataAuthDdb.get(userName);
   if (!userAuth) {
     throw {errorCode: 404, message: 'user_not_found'};
   }
 
   return {
     authorized: userAuth.password === password ? true : false,
-    userName,
-    userRn,
-  }
-}
+    userName: userAuth.userName,
+    userRn: userAuth.userRn,
+  };
+};
 
-const updatePassword = async (userName, userRn, newPassword) => {
-  const userAuth = await userDataAuthDdb.get(userName, userRn);
+const updatePassword = async (userName, newPassword) => {
+  const userAuth = await userDataAuthDdb.get(userName);
   if (!userAuth) {
     throw {errorCode: 404, message: 'user_not_found'};
   }
@@ -41,17 +41,18 @@ const updatePassword = async (userName, userRn, newPassword) => {
   await userDataAuthDdb.update(userAuth);
 
   return userAuth;
-}
+};
 
-const removeUserAuth = async (userName, userRn) => {
-  const userAuth = await userDataAuthDdb.remove(userName, userRn);
+const removeUserAuth = async (userName) => {
+  const userAuth = await userDataAuthDdb.remove(userName);
   
   return userAuth;
-}
+};
 
 module.exports = {
   createUserAuth,
   authUser,
   removeUserAuth,
   updatePassword,
+  getUserAuth: userDataAuthDdb.get,
 };
