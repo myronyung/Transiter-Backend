@@ -185,7 +185,7 @@
             "Type": "Api",
             "Properties": {
               "RestApiId": { "Ref": "ApiGatewayApi" },
-              "Path": "/userAuth/userName/{userName}",
+              "Path": "/userAuth/userName/{userName}/auth",
               "Method": "PUT"
             }
           },

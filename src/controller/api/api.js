@@ -17,7 +17,7 @@ const routes = {
 
 
   // User authentication //
-  'GET:/userAuth/userName/{userName}': require('./user_auth/user_authorize'),
+  'PUT:/userAuth/userName/{userName}/auth': require('./user_auth/user_authorize'),
   'PUT:/userAuth/userName/{userName}': require('./user_auth/user_update_password'),
   // User authentication //
 
