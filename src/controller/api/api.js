@@ -9,7 +9,7 @@ const routes = {
   // Create, get, delete
   'POST:/user': require('./user/user_create'),
   'GET:/user/userName/{userName}/userRn/{userRn}': require('./user/user_get'),
-  'DELETE:/user/userRn/{userRn}': require('./user/user_remove'),
+  'DELETE:/user/userName/{userName}': require('./user/user_remove'),
 
   // Update
   'PUT:/user/userName/{userName}': require('./user/user_update'),
