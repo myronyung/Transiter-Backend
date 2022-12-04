@@ -159,7 +159,7 @@
             "Type": "Api",
             "Properties": {
               "RestApiId": { "Ref": "ApiGatewayApi" },
-              "Path": "/user/userName/{userName}/userRn/{userRn}",
+              "Path": "/user/userName/{userName}",
               "Method": "PUT"
             }
           },
@@ -175,7 +175,7 @@
             "Type": "Api",
             "Properties": {
               "RestApiId": { "Ref": "ApiGatewayApi" },
-              "Path": "/user/userName/{userName}/userRn/{userRn}",
+              "Path": "/user/userName/{userName}",
               "Method": "DELETE"
             }
           },
@@ -185,7 +185,7 @@
             "Type": "Api",
             "Properties": {
               "RestApiId": { "Ref": "ApiGatewayApi" },
-              "Path": "/userAuth/userName/{userName}/userRn/{userRn}",
+              "Path": "/userAuth/userName/{userName}",
               "Method": "PUT"
             }
           },
@@ -193,7 +193,7 @@
             "Type": "Api",
             "Properties": {
               "RestApiId": { "Ref": "ApiGatewayApi" },
-              "Path": "/userAuth/userName/{userName}/userRn/{userRn}",
+              "Path": "/userAuth/userName/{userName}",
               "Method": "GET"
             }
           },
